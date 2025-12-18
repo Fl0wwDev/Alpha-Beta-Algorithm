@@ -13,6 +13,88 @@ player_type = ['human']
 for i in range(42):
     player_type.append('AI: alpha-beta level '+str(i+1))
 
+
+def max_value(board, turn):
+    if board.check_victory():
+        return -1
+    if turn > 42:
+        return 0
+    possible_moves = board.get_possible_moves()
+    best_value = -2
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = min_value(updated_board, turn + 1)
+        if value > best_value:
+            best_value = value
+    return best_value
+
+
+def min_value(board, turn):
+    if board.check_victory():
+        return 1
+    if turn > 42:
+        return 0
+    possible_moves = board.get_possible_moves()
+    worst_value = 2
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = max_value(updated_board, turn + 1)
+        if value < worst_value:
+            worst_value = value
+    return worst_value
+
+
+def minimax_decision(board, turn, ai_level, queue, max_player):
+    possible_moves = board.get_possible_moves()
+    best_move = possible_moves[0]
+    best_value = -2
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = min_value(updated_board, turn + 1)
+        if value > best_value:
+            best_value = value
+            best_move = move
+    queue.put(best_move)
+
+
+def max_value_ab(board, turn, alpha, beta):
+    if board.check_victory():
+        return -1
+    if turn > 42:
+        return 0
+    possible_moves = board.get_possible_moves()
+    value = -2
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = max(value, min_value_ab(updated_board, turn + 1, alpha, beta))
+        if value >= beta:
+            return value
+        alpha = max(alpha, value)
+    return value
+
+
+def min_value_ab(board, turn, alpha, beta):
+    if board.check_victory():
+        return 1
+    if turn > 42:
+        return 0
+    possible_moves = board.get_possible_moves()
+    value = 2
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = min(value, max_value_ab(updated_board, turn + 1, alpha, beta))
+        if value <= alpha:
+            return value
+        beta = min(beta, value)
+    return value
+
+
+
 def alpha_beta_decision(board, turn, ai_level, queue, max_player):
     # random move (to modify)
     queue.put(board.get_possible_moves()[rnd.randint(0, len(board.get_possible_moves()) - 1)])
@@ -115,7 +197,7 @@ class Connect4:
             self.move(column)
 
     def ai_turn(self, ai_level):
-        Thread(target=alpha_beta_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
+        Thread(target=minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
         self.ai_wait_for_move()
 
     def ai_wait_for_move(self):
