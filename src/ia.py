@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import random as rnd
+import time
 from threading import Thread
 from queue import Queue
 
@@ -15,47 +16,51 @@ for i in range(42):
     player_type.append('AI: alpha-beta level '+str(i+1))
 
 
-def max_value(board, turn):
+def max_value(board, turn, depth, max_depth):
     if board.check_victory():
         return -1
     if turn > 42:
+        return 0
+    if depth >= max_depth:
         return 0
     possible_moves = board.get_possible_moves()
     best_value = -2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = min_value(updated_board, turn + 1)
+        value = min_value(updated_board, turn + 1, depth + 1, max_depth)
         if value > best_value:
             best_value = value
     return best_value
 
 
-def min_value(board, turn):
+def min_value(board, turn, depth, max_depth):
     if board.check_victory():
         return 1
     if turn > 42:
+        return 0
+    if depth >= max_depth:
         return 0
     possible_moves = board.get_possible_moves()
     worst_value = 2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = max_value(updated_board, turn + 1)
+        value = max_value(updated_board, turn + 1, depth + 1, max_depth)
         if value < worst_value:
             worst_value = value
     return worst_value
 
 
 def minimax_decision(board, turn, ai_level, queue, max_player):
+    max_depth = 4 
     possible_moves = board.get_possible_moves()
-    print("lesmoves possible",possible_moves)
     best_move = possible_moves[0]
     best_value = -2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = min_value(updated_board, turn + 1)
+        value = min_value(updated_board, turn + 1, 1, max_depth)
         if value > best_value:
             best_value = value
             best_move = move
