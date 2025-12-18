@@ -229,7 +229,7 @@ class Connect4:
 game = Connect4()
 
 # Graphical settings
-width = 700
+width = 1500
 row_width = width // 7
 row_height = row_width
 height = row_width * 6
@@ -237,6 +237,8 @@ row_margin = row_height // 10
 
 window = tk.Tk()
 window.title("Connect 4")
+style = ttk.Style()
+style.configure('TCombobox', font=('TkDefaultFont', 28))
 canvas1 = tk.Canvas(window, bg="blue", width=width, height=height)
 
 # Drawing the grid
@@ -249,17 +251,17 @@ for i in range(7):
 
 canvas1.grid(row=0, column=0, columnspan=2)
 
-information = tk.Label(window, text="")
+information = tk.Label(window, text="", font=('TkDefaultFont', 28))
 information.grid(row=1, column=0, columnspan=2)
 
-label_player1 = tk.Label(window, text="Player 1: ")
+label_player1 = tk.Label(window, text="Player 1: ", font=('TkDefaultFont', 28))
 label_player1.grid(row=2, column=0)
-combobox_player1 = ttk.Combobox(window, state='readonly')
+combobox_player1 = ttk.Combobox(window, state='readonly', font=('TkDefaultFont', 28))
 combobox_player1.grid(row=2, column=1)
 
-label_player2 = tk.Label(window, text="Player 2: ")
+label_player2 = tk.Label(window, text="Player 2: ", font=('TkDefaultFont', 28))
 label_player2.grid(row=3, column=0)
-combobox_player2 = ttk.Combobox(window, state='readonly')
+combobox_player2 = ttk.Combobox(window, state='readonly', font=('TkDefaultFont', 28))
 combobox_player2.grid(row=3, column=1)
 
 combobox_player1['values'] = player_type
@@ -267,10 +269,10 @@ combobox_player1.current(0)
 combobox_player2['values'] = player_type
 combobox_player2.current(6)
 
-button2 = tk.Button(window, text='New game', command=game.launch)
+button2 = tk.Button(window, text='New game', command=game.launch, font=('TkDefaultFont', 28))
 button2.grid(row=4, column=0)
 
-button = tk.Button(window, text='Quit', command=window.destroy)
+button = tk.Button(window, text='Quit', command=window.destroy, font=('TkDefaultFont', 28))
 button.grid(row=4, column=1)
 
 # Mouse handling
