@@ -10,6 +10,7 @@ disk_color = ['white', 'red', 'orange']
 disks = list()
 
 player_type = ['human']
+player_type.append('AI: minimax')
 for i in range(42):
     player_type.append('AI: alpha-beta level '+str(i+1))
 
@@ -48,6 +49,7 @@ def min_value(board, turn):
 
 def minimax_decision(board, turn, ai_level, queue, max_player):
     possible_moves = board.get_possible_moves()
+    print("lesmoves possible",possible_moves)
     best_move = possible_moves[0]
     best_value = -2
     for move in possible_moves:
@@ -197,7 +199,12 @@ class Connect4:
             self.move(column)
 
     def ai_turn(self, ai_level):
-        Thread(target=minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
+        if ai_level == 1:
+            # Minimax (index 1 in combobox)
+            Thread(target=minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
+        else:
+            # Alpha-beta (index 2+ in combobox)
+            Thread(target=alpha_beta_decision, args=(self.board, self.turn, ai_level - 1, self.ai_move, self.current_player(),)).start()
         self.ai_wait_for_move()
 
     def ai_wait_for_move(self):
