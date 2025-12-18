@@ -1,1 +1,1 @@
-# Alpha-Beta-Algorithm-
+# Alpha-Beta-Algorithm
