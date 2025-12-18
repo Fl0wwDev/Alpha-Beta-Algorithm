@@ -15,6 +15,7 @@ This project uses [uv](https://github.com/astral-sh/uv) An extremely fast Python
 </p>
 
 🚀 **A single tool to replace ```pip```, ```pip-tools```, ```pipx```, ```poetry```, ```pyenv```, ```twine```, ```virtualenv```, and more.**
+
 ⚡️ **10-100x faster than pip.**
 
 
