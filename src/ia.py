@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import random as rnd
+import time
 from threading import Thread
 from queue import Queue
 
@@ -10,50 +11,56 @@ disk_color = ['white', 'red', 'orange']
 disks = list()
 
 player_type = ['human']
+player_type.append('AI: minimax')
 for i in range(42):
     player_type.append('AI: alpha-beta level '+str(i+1))
 
 
-def max_value(board, turn):
+def max_value(board, turn, depth, max_depth):
     if board.check_victory():
         return -1
     if turn > 42:
+        return 0
+    if depth >= max_depth:
         return 0
     possible_moves = board.get_possible_moves()
     best_value = -2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = min_value(updated_board, turn + 1)
+        value = min_value(updated_board, turn + 1, depth + 1, max_depth)
         if value > best_value:
             best_value = value
     return best_value
 
 
-def min_value(board, turn):
+def min_value(board, turn, depth, max_depth):
     if board.check_victory():
         return 1
     if turn > 42:
+        return 0
+    if depth >= max_depth:
         return 0
     possible_moves = board.get_possible_moves()
     worst_value = 2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = max_value(updated_board, turn + 1)
+        value = max_value(updated_board, turn + 1, depth + 1, max_depth)
         if value < worst_value:
             worst_value = value
     return worst_value
 
 
 def minimax_decision(board, turn, ai_level, queue, max_player):
+    max_depth = 4 
     possible_moves = board.get_possible_moves()
     best_move = possible_moves[0]
     best_value = -2
     for move in possible_moves:
         updated_board = board.copy()
         updated_board.add_disk(move, turn % 2 + 1, update_display=False)
-        value = min_value(updated_board, turn + 1)
+        value = min_value(updated_board, turn + 1, 1, max_depth)
         if value > best_value:
             best_value = value
             best_move = move
@@ -197,7 +204,12 @@ class Connect4:
             self.move(column)
 
     def ai_turn(self, ai_level):
-        Thread(target=minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
+        if ai_level == 1:
+            # Minimax (index 1 in combobox)
+            Thread(target=minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
+        else:
+            # Alpha-beta (index 2+ in combobox)
+            Thread(target=alpha_beta_decision, args=(self.board, self.turn, ai_level - 1, self.ai_move, self.current_player(),)).start()
         self.ai_wait_for_move()
 
     def ai_wait_for_move(self):
