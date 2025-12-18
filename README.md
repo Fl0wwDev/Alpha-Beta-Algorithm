@@ -1,3 +1,10 @@
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![image](https://img.shields.io/pypi/v/uv.svg)](https://pypi.python.org/pypi/uv)
+[![image](https://img.shields.io/pypi/l/uv.svg)](https://pypi.python.org/pypi/uv)
+[![image](https://img.shields.io/pypi/pyversions/uv.svg)](https://pypi.python.org/pypi/uv)
+
+
+
 # Alpha-Beta Algorithm
 
 A Connect 4 game implementation featuring **Minimax** and **Alpha-Beta pruning** algorithms for AI decision-making.
