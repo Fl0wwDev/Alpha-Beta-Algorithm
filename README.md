@@ -6,6 +6,14 @@ A Connect 4 game implementation featuring **Minimax** and **Alpha-Beta pruning**
 
 This project uses [uv](https://github.com/astral-sh/uv) An extremely fast Python package and project manager, written in Rust.
 
+<p align="center">
+  <picture align="center">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/astral-sh/uv/assets/1309177/03aa9163-1c79-4a87-a31d-7a9311ed9310">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/astral-sh/uv/assets/1309177/629e59c0-9c6e-4013-9ad4-adb2bcf5080d">
+    <img alt="Shows a bar chart with benchmark results." src="https://github.com/astral-sh/uv/assets/1309177/629e59c0-9c6e-4013-9ad4-adb2bcf5080d">
+  </picture>
+</p>
+
 🚀 **A single tool to replace ```pip```, ```pip-tools```, ```pipx```, ```poetry```, ```pyenv```, ```twine```, ```virtualenv```, and more.**
 ⚡️ **10-100x faster than pip.**
 
