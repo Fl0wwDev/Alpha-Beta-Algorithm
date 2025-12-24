@@ -1,16 +1,18 @@
 import numpy as np
-from ui import canvas1, disks, disk_color
 
 class Board:
-    grid = np.array([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0],
-                     [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
+
+    def __init__(self, ui):
+        self.grid = np.array([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0],
+                             [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
+        self.ui = ui
 
 
     def eval(self, player):
         return 0
 
     def copy(self):
-        new_board = Board()
+        new_board = Board(self.ui)
         new_board.grid = np.array(self.grid, copy=True)
         return new_board
 
@@ -18,7 +20,7 @@ class Board:
         self.grid.fill(0)
         for i in range(7):
             for j in range(6):
-                canvas1.itemconfig(disks[i][j], fill=disk_color[0])
+                self.ui.canvas.itemconfig(self.ui.disks[i][j], fill=self.ui.disk_color[0])
 
     def get_possible_moves(self):
         possible_moves = list()
@@ -37,7 +39,7 @@ class Board:
                 break
         self.grid[column][j] = player
         if update_display:
-            canvas1.itemconfig(disks[column][j], fill=disk_color[player])
+            self.ui.canvas.itemconfig(self.ui.disks[column][j], fill=self.ui.disk_color[player])
 
     def column_filled(self, column):
         return self.grid[column][5] != 0

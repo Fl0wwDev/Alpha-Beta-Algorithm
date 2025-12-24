@@ -1,5 +1,6 @@
-from ui import Board
+from board import Board
 from queue import Queue
+import random as rnd
 
 class MinMax:
 
@@ -98,6 +99,11 @@ class MinMax:
                 best_value = value
                 best_move = move
         queue.put(best_move)
+
+    
+    def alpha_beta_decision(board, turn, ai_level, queue, max_player):
+        # random move (to modify)
+        queue.put(board.get_possible_moves()[rnd.randint(0, len(board.get_possible_moves()) - 1)])
 
 
     def max_value_ab(self, board, turn, alpha, beta):
