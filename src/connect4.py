@@ -1,16 +1,18 @@
 from threading import Thread
 from queue import Queue
-from minimax import MinMax
+from minmax import MinMax
+from ui import UI
+from board import Board
 
 class Connect4:
 
-    def __init__(self, ui, board):
-        self.board = board
+    def __init__(self, ui: UI, board: Board):
         self.human_turn = False
         self.turn = 1
         self.players = (0, 0)
         self.ai_move = Queue()
         self.ui = ui
+        self.board = board
 
     def current_player(self):
         return 2 - (self.turn % 2)

@@ -1,8 +1,9 @@
 import numpy as np
+from ui import UI
 
 class Board:
 
-    def __init__(self, ui):
+    def __init__(self, ui: UI):
         self.grid = np.array([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
         self.ui = ui
