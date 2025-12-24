@@ -27,17 +27,17 @@ class Connect4:
         self.players = (self.ui.combobox_player1.current(), self.ui.combobox_player2.current())
         self.handle_turn()
 
-    def move(self, column):
+    def move(self, column: int):
         if not self.board.column_filled(column):
             self.board.add_disk(column, self.current_player())
             self.handle_turn()
 
-    def click(self, event):
+    def click(self, event: object):
         if self.human_turn:
             column = event.x // self.ui.row_width
             self.move(column)
 
-    def ai_turn(self, ai_level):
+    def ai_turn(self, ai_level: int):
         minmax = MinMax(self.board, self.turn, ai_level, self.ai_move, True)
         if ai_level == 1:
             # Minimax (index 1 in combobox)

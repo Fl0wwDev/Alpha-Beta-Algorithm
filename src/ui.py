@@ -77,7 +77,7 @@ class UI:
     def bind_mouse_events(self):
         self.canvas.bind('<Button-1>', self.game.click)
     
-    def launch_ui(self, game):
+    def launch_ui(self, game: object):
         self.game = game
         
         self.create_window()

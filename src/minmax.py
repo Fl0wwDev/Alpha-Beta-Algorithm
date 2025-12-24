@@ -51,7 +51,7 @@ class MinMax:
     def max_player(self, max_player: bool):
         self._max_player = max_player
     
-    def max_value(self, board, turn, depth, max_depth):
+    def max_value(self, board: Board, turn: int, depth: int, max_depth: int):
         if board.check_victory():
             return -1
         if turn > 42:
@@ -68,7 +68,7 @@ class MinMax:
                 best_value = value
         return best_value
 
-    def min_value(self, board, turn, depth, max_depth):
+    def min_value(self, board: Board, turn: int, depth: int, max_depth: int):
         if board.check_victory():
             return 1
         if turn > 42:
@@ -86,7 +86,7 @@ class MinMax:
         return worst_value
 
 
-    def minimax_decision(self, board, turn, ai_level, queue, max_player):
+    def minimax_decision(self, board: Board, turn: int, ai_level: int, queue: Queue, max_player: bool):
         max_depth = 4 
         possible_moves = board.get_possible_moves()
         best_move = possible_moves[0]
@@ -106,7 +106,7 @@ class MinMax:
         queue.put(board.get_possible_moves()[rnd.randint(0, len(board.get_possible_moves()) - 1)])
 
 
-    def max_value_ab(self, board, turn, alpha, beta):
+    def max_value_ab(self, board: Board, turn: int, alpha: int, beta: int):
         if board.check_victory():
             return -1
         if turn > 42:
@@ -123,7 +123,7 @@ class MinMax:
         return value
 
 
-    def min_value_ab(self, board, turn, alpha, beta):
+    def min_value_ab(self, board: Board, turn: int, alpha: int, beta: int):
         if board.check_victory():
             return 1
         if turn > 42:
