@@ -1,56 +1,12 @@
 from board import Board
 from queue import Queue
 import random as rnd
+from search import Search
 
-class MinMax:
-
+class MinMax(Search):
     def __init__(self, board: Board, turn: int, ai_level: int, queue: Queue, max_player: bool):
-        self._board = board
-        self._turn = turn
-        self._ai_level = ai_level
-        self._queue = queue
-        self._max_player = max_player
+        super().__init__(board, turn, ai_level, queue, max_player)
 
-    @property
-    def board(self) -> Board:
-        return self._board
-    
-    @board.setter
-    def board(self, board: Board):
-        self._board = board 
-
-    @property
-    def turn(self) -> int:
-        return self._turn
-    
-    @turn.setter
-    def turn(self, turn: int):
-        self._turn = turn
-
-    @property
-    def ai_level(self) -> int:
-        return self._ai_level
-    
-    @ai_level.setter
-    def ai_level(self, ai_level: int):
-        self._ai_level = ai_level
-    
-    @property
-    def queue(self) -> Queue:
-        return self._queue
-    
-    @queue.setter
-    def queue(self, queue: Queue):
-        self._queue = queue
-
-    @property
-    def max_player(self) -> bool:
-        return self._max_player
-    
-    @max_player.setter
-    def max_player(self, max_player: bool):
-        self._max_player = max_player
-    
     def max_value(self, board: Board, turn: int, depth: int, max_depth: int):
         if board.check_victory():
             return -1
@@ -76,14 +32,14 @@ class MinMax:
         if depth >= max_depth:
             return 0
         possible_moves = board.get_possible_moves()
-        worst_value = 2
+        worse_value = 2
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
             value = self.max_value(updated_board, turn + 1, depth + 1, max_depth)
-            if value < worst_value:
-                worst_value = value
-        return worst_value
+            if value < worse_value:
+                worse_value = value
+        return worse_value
 
 
     def minimax_decision(self, board: Board, turn: int, ai_level: int, queue: Queue, max_player: bool):
