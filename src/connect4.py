@@ -1,6 +1,7 @@
 from threading import Thread
 from queue import Queue
 from minmax import MinMax
+from alpha_beta import AlphaBeta
 from ui import UI
 from board import Board
 
@@ -38,13 +39,14 @@ class Connect4:
             self.move(column)
 
     def ai_turn(self, ai_level: int):
-        minmax = MinMax(self.board, self.turn, ai_level, self.ai_move, True)
         if ai_level == 1:
+            minmax = MinMax(self.board, self.turn, ai_level, self.ai_move, True)
             # Minimax (index 1 in combobox)
             Thread(target=minmax.minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
         else:
+            alpha_beta = AlphaBeta(self.board, self.turn, ai_level, self.ai_move, True)
             # Alpha-beta (index 2+ in combobox)
-            Thread(target=minmax.alpha_beta_decision, args=(self.board, self.turn, ai_level - 1, self.ai_move, self.current_player(),)).start()
+            Thread(target=alpha_beta.alpha_beta_decision, args=(self.board, self.turn, ai_level - 1, self.ai_move, self.current_player(),)).start()
         self.ai_wait_for_move()
 
     def ai_wait_for_move(self):
