@@ -10,9 +10,9 @@ class AlphaBeta(Search):
     def alpha_beta_decision(self, board, turn, ai_level, queue, max_player):
         possible_moves = board.get_possible_moves()
         best_move = possible_moves[0]
-        best_value = -2
-        alpha = -2
-        beta = 2
+        best_value = float('-inf')
+        alpha = float('-inf')
+        beta = float('inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -28,7 +28,7 @@ class AlphaBeta(Search):
         if turn > self.ai_level:
             return 0
         possible_moves = board.get_possible_moves()
-        value = -2
+        value = float('-inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -44,7 +44,7 @@ class AlphaBeta(Search):
         if turn > self.ai_level:
             return 0
         possible_moves = board.get_possible_moves()
-        value = 2
+        value = float('inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)

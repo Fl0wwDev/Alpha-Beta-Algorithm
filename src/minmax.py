@@ -15,7 +15,7 @@ class MinMax(Search):
         if depth >= max_depth:
             return 0
         possible_moves = board.get_possible_moves()
-        best_value = -2
+        best_value = float('-inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -32,7 +32,7 @@ class MinMax(Search):
         if depth >= max_depth:
             return 0
         possible_moves = board.get_possible_moves()
-        worse_value = 2
+        worse_value = float('inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -46,7 +46,7 @@ class MinMax(Search):
         max_depth = 4 
         possible_moves = board.get_possible_moves()
         best_move = possible_moves[0]
-        best_value = -2
+        best_value = float('-inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -68,7 +68,7 @@ class MinMax(Search):
         if turn > 42:
             return 0
         possible_moves = board.get_possible_moves()
-        value = -2
+        value = float('-inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
@@ -85,7 +85,7 @@ class MinMax(Search):
         if turn > 42:
             return 0
         possible_moves = board.get_possible_moves()
-        value = 2
+        value = float('inf')
         for move in possible_moves:
             updated_board = board.copy()
             updated_board.add_disk(move, turn % 2 + 1, update_display=False)
