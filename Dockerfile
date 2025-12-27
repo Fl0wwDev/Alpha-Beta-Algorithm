@@ -44,4 +44,4 @@ ENTRYPOINT []
 # Use the non-root user to run our application
 USER nonroot
 
-CMD ["uv", "run", "main"]
+CMD ["uv", "run", "src/main.py"]

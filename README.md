@@ -61,7 +61,7 @@ Simply run the provided script (templates from [Astral documentation](https://do
 3. **Run the project**
 
    ```bash
-   uv run main
+   uv run src/main.py
    ```
 
 ## Features
