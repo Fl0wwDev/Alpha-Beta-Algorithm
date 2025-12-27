@@ -8,16 +8,21 @@ class Board:
                              [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
         self.ui = ui
 
+    def eval(self, turn, depth, max_depth):
+        player = turn % 2 + 1
 
-    def eval(self, player):
-        winner = self.check_victory()
-        if winner == 1:
-            return 1
-        elif winner == 2:
-            return -1
-        elif not self.get_possible_moves():
-            return 0 
-
+        if self.check_victory():
+            if player == 1:
+                return -1
+            else:
+                return 1
+        elif turn > max_depth:
+            return 0
+        elif depth >= max_depth:
+            return 0
+        else:
+            return None
+        
     def copy(self):
         new_board = Board(self.ui)
         new_board.grid = np.array(self.grid, copy=True)
