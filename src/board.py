@@ -10,7 +10,13 @@ class Board:
 
 
     def eval(self, player):
-        return 0
+        winner = self.check_victory()
+        if winner == 1:
+            return 1
+        elif winner == 2:
+            return -1
+        elif not self.get_possible_moves():
+            return 0 
 
     def copy(self):
         new_board = Board(self.ui)

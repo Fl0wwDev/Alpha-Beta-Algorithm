@@ -1,6 +1,5 @@
 from board import Board
 from queue import Queue
-import random as rnd
 from search import Search
 
 class AlphaBeta(Search):
@@ -54,3 +53,50 @@ class AlphaBeta(Search):
             beta = min(beta, value)
         return value
 
+
+# Dans alpha_beta.py
+
+def alpha_beta_decision(self, board, turn, ai_level, queue, max_player):
+    possible_moves = board.get_possible_moves()
+    best_move = possible_moves[0]
+    best_value = float('-inf') if max_player else float('inf')
+    alpha = float('-inf')
+    beta = float('inf')
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = self.min_value_ab(updated_board, turn + 1, 1, alpha, beta) if max_player else self.max_value_ab(updated_board, turn + 1, 1, alpha, beta)
+        if (max_player and value > best_value) or (not max_player and value < best_value):
+            best_value = value
+            best_move = move
+            if max_player:
+                alpha = max(alpha, best_value)
+    queue.put(best_move)
+
+def max_value_ab(self, board: Board, turn: int, depth: int, alpha: float, beta: float):
+    if depth >= self.ai_level or not board.get_possible_moves():
+        return board.eval(1)
+    possible_moves = board.get_possible_moves()
+    value = float('-inf')
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = max(value, self.min_value_ab(updated_board, turn + 1, depth + 1, alpha, beta))
+        if value >= beta:
+            return value
+        alpha = max(alpha, value)
+    return value
+
+def min_value_ab(self, board: Board, turn: int, depth: int, alpha: float, beta: float):
+    if depth >= self.ai_level or not board.get_possible_moves():
+        return board.eval(1)
+    possible_moves = board.get_possible_moves()
+    value = float('inf')
+    for move in possible_moves:
+        updated_board = board.copy()
+        updated_board.add_disk(move, turn % 2 + 1, update_display=False)
+        value = min(value, self.max_value_ab(updated_board, turn + 1, depth + 1, alpha, beta))
+        if value <= alpha:
+            return value
+        beta = min(beta, value)
+    return value
