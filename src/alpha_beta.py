@@ -53,9 +53,6 @@ class AlphaBeta(Search):
             beta = min(beta, value)
         return value
 
-
-# Dans alpha_beta.py
-
 def alpha_beta_decision(self, board, turn, ai_level, queue, max_player):
     possible_moves = board.get_possible_moves()
     best_move = possible_moves[0]
