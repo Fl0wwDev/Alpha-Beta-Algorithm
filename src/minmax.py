@@ -8,7 +8,7 @@ class MinMax(Search):
         super().__init__(board, turn, ai_level, queue, max_player)
 
     def max_value(self, board: Board, turn: int, depth: int, max_depth: int):
-        reward = board.eval(turn, depth, max_depth)
+        reward = board.minimax_eval(turn, depth, max_depth)
         if reward is not None:
             print("Max returning:", reward)
             return reward
@@ -23,9 +23,9 @@ class MinMax(Search):
         return best_value
 
     def min_value(self, board: Board, turn: int, depth: int, max_depth: int):
-        reward = board.eval(turn, depth, max_depth)
+        reward = board.minimax_eval(turn, depth, max_depth)
         if reward is not None:
-            print(reward)
+            print("Min returning:", reward)
             return reward
         possible_moves = board.get_possible_moves()
         worse_value = float('inf')

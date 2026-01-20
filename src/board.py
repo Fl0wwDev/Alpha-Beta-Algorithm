@@ -7,24 +7,8 @@ class Board:
         self.grid = np.array([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
         self.ui = ui
-
+    
     def eval(self, turn, depth, max_depth):
-        player = turn % 2 + 1
-
-        if self.check_victory():
-            if player == 1:
-                return -1
-            else:
-                return 1
-        elif turn > max_depth:
-            return 0
-        elif depth >= max_depth:
-            return 0
-        else:
-            return None
-            
-        
-    def test_eval(self, turn, depth, max_depth):
         player = turn % 2 + 1 
 
         if self.check_victory():
@@ -147,3 +131,19 @@ class Board:
                         self.grid[horizontal_shift + 2][3 - vertical_shift] == self.grid[horizontal_shift + 3][2 - vertical_shift] != 0:
                     return True
         return False
+
+
+    def minimax_eval(self, turn, depth, max_depth):
+        player = turn % 2 + 1
+
+        if self.check_victory():
+            if player == 1:
+                return -1
+            else:
+                return 1
+        elif turn > max_depth:
+            return 0
+        elif depth >= max_depth:
+            return 0
+        else:
+            return None
