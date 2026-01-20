@@ -38,7 +38,6 @@ class Board:
         
         return None
         
-
     def calculate_heuristic(self, player):
         reward = 0
         addreward = 0
@@ -92,8 +91,6 @@ class Board:
             return -reward
         else:
             return reward
-
-
 
     def copy(self):
         new_board = Board(self.ui)
