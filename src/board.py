@@ -22,18 +22,27 @@ class Board:
             return 0
         else:
             return None
+            
         
     def test_eval(self, turn, depth, max_depth):
-        if turn > max_depth:
-            return 0
-        elif depth >= max_depth:
-            return 0
+        player = turn % 2 + 1 
+
+        if self.check_victory():
+            if player == 1:
+                return -10000
+            else:
+                return 10000
+
+        if depth >= max_depth:
+            return self.calculate_heuristic(player)
         
+        return None
+        
+
+    def calculate_heuristic(self, player):
         reward = 0
         addreward = 0
-        
-        if self.check_victory():
-            return 1000 if turn % 2 + 1 == 2 else -1000
+
         # Horizontal alignment check
         for line in range(6):
             for horizontal_shift in range(4):
@@ -42,7 +51,7 @@ class Board:
                     if self.grid[horizontal_shift + 1][line] == self.grid[horizontal_shift + 2][line] != 0:
                         addreward += 10
                         if self.grid[horizontal_shift + 2][line] == self.grid[horizontal_shift + 3][line] != 0:
-                            addreward += 100
+                            addreward += 1000
         reward += addreward
         addreward = 0
         # Vertical alignment check
@@ -53,7 +62,7 @@ class Board:
                     if self.grid[column][vertical_shift + 1] == self.grid[column][vertical_shift + 2] != 0:
                         addreward += 10
                         if self.grid[column][vertical_shift + 2] == self.grid[column][vertical_shift + 3] != 0:
-                            addreward += 100
+                            addreward += 1000
 
         reward += addreward
         addreward = 0
@@ -65,16 +74,20 @@ class Board:
                     if self.grid[horizontal_shift + 1][vertical_shift + 1] == self.grid[horizontal_shift + 2][vertical_shift + 2] != 0:
                         addreward += 10
                         if self.grid[horizontal_shift + 2][vertical_shift + 2] == self.grid[horizontal_shift + 3][vertical_shift + 3] != 0:
-                            addreward += 100
+                            addreward += 1000
                 elif self.grid[horizontal_shift][5 - vertical_shift] == self.grid[horizontal_shift + 1][4 - vertical_shift] != 0:
                     addreward += 1
                     if self.grid[horizontal_shift + 1][4 - vertical_shift] == self.grid[horizontal_shift + 2][3 - vertical_shift] != 0:
                         addreward += 10
                         if self.grid[horizontal_shift + 2][3 - vertical_shift] == self.grid[horizontal_shift + 3][2 - vertical_shift] != 0:
-                            addreward += 100
+                            addreward += 1000
         reward += addreward
 
-        player = turn % 2 + 1
+        #bonus center
+        # center_column = self.grid[3]
+        # center_count = np.count_nonzero(center_column == player)
+        # reward += center_count * 3
+
         if player == 1:
             return -reward
         else:
