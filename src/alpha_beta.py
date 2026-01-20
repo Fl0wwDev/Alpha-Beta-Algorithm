@@ -23,7 +23,7 @@ class AlphaBeta(Search):
         queue.put(best_move)
 
     def max_value_ab(self, board: Board, turn: int, alpha: float, beta: float, depth: int, max_depth: int):
-        reward = board.eval(turn, depth, max_depth)
+        reward = board.test_eval(turn, depth, max_depth)
         if reward is not None:
             return reward
         possible_moves = board.get_possible_moves()
@@ -39,7 +39,7 @@ class AlphaBeta(Search):
 
     def min_value_ab(self, board: Board, turn: int, alpha: float, beta: float, depth: int, max_depth: int):
         print(max_depth, self.ai_level)
-        reward = board.eval(turn, depth, max_depth)
+        reward = board.test_eval(turn, depth, max_depth)
         if reward is not None:
             return reward
         possible_moves = board.get_possible_moves()
