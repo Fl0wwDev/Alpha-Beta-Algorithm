@@ -44,7 +44,7 @@ class Connect4:
             # Minimax (index 1 in combobox)
             Thread(target=minmax.minimax_decision, args=(self.board, self.turn, ai_level, self.ai_move, self.current_player(),)).start()
         else:
-            alpha_beta = AlphaBeta(self.board, self.turn, ai_level, self.ai_move, True)
+            alpha_beta = AlphaBeta(self.board, self.turn, ai_level - 1, self.ai_move, True)
             # Alpha-beta (index 2+ in combobox)
             Thread(target=alpha_beta.alpha_beta_decision, args=(self.board, self.turn, ai_level - 1, self.ai_move, self.current_player(),)).start()
         self.ai_wait_for_move()
