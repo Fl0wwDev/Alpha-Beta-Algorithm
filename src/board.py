@@ -84,9 +84,9 @@ class Board:
         reward += addreward
 
         #bonus center
-        # center_column = self.grid[3]
-        # center_count = np.count_nonzero(center_column == player)
-        # reward += center_count * 3
+        center_column = self.grid[3]
+        center_count = np.count_nonzero(center_column == player)
+        reward += center_count * 3
 
         if player == 1:
             return -reward
